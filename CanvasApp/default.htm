@@ -13,6 +13,19 @@
 <body>
     <h1>TypeScript HTML App</h1>
 
-    <div id="content"></div>
+	<div id="header"></div>
+
+	<canvas id="canvas" width ="320" height="480"></canvas>
+
+	<script>
+		window.onload = new function () {
+			var ctx = document.getElementById('canvas').getContext('2d');
+
+			ctx.fillStyle = '#505050';
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+			new App().start();
+		}
+	</script>
 </body>
 </html>

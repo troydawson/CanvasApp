@@ -1,35 +1,10 @@
 /// <reference path="defs/toastr.d.ts" />
-class Greeter {
-    element: HTMLElement;
-    span: HTMLElement;
-    timerToken: number;
-    
-    constructor (element: HTMLElement) { 
-        this.element = element;
-        this.element.innerText += "The time is: ";
-        this.span = document.createElement('span');
-        this.element.appendChild(this.span);
-        this.span.innerText = new Date().toUTCString();
-    }
 
-    update() : void {
-    	this.span.innerText = new Date().toUTCString();
-    }
+class App {
 
-    start() {
-        this.timerToken = setInterval(() => this.update(), 500);
-    }
+	constructor() { }
 
-    stop() {
-        clearTimeout(this.timerToken);
-    }
-
+	start(): void {
+		toastr.success('Hello!');
+	}
 }
-
-window.onload = () => {
-    var el = document.getElementById('content');
-    var greeter = new Greeter(el);
-    greeter.start();
-
-    toastr.success("Hello!");
-};
