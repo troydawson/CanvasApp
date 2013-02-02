@@ -1,3 +1,4 @@
+/// <reference path="defs/toastr.d.ts" />
 var Greeter = (function () {
     function Greeter(element) {
         this.element = element;
@@ -6,10 +7,13 @@ var Greeter = (function () {
         this.element.appendChild(this.span);
         this.span.innerText = new Date().toUTCString();
     }
+    Greeter.prototype.update = function () {
+        this.span.innerText = new Date().toUTCString();
+    };
     Greeter.prototype.start = function () {
         var _this = this;
         this.timerToken = setInterval(function () {
-            return _this.span.innerText = new Date().toUTCString();
+            return _this.update();
         }, 500);
     };
     Greeter.prototype.stop = function () {
@@ -21,5 +25,6 @@ window.onload = function () {
     var el = document.getElementById('content');
     var greeter = new Greeter(el);
     greeter.start();
+    toastr.success("Hello!");
 };
 //@ sourceMappingURL=app.js.map

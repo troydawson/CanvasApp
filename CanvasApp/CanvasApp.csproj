@@ -21,7 +21,7 @@
     <UpgradeBackupLocation />
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="app.css" />
+    <Content Include="css\app.css" />
     <Content Include="default.htm" />
     <Content Include="app.js">
       <DependentUpon>app.ts</DependentUpon>
@@ -31,6 +31,25 @@
     <TypeScriptCompile Include="app.ts" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="defs\async.d.ts" />
+    <Content Include="defs\box2dweb.d.ts" />
+    <Content Include="defs\breeze.d.ts" />
+    <Content Include="defs\easeljs.d.ts" />
+    <Content Include="defs\jasmine.d.ts" />
+    <Content Include="defs\jquery.d.ts" />
+    <Content Include="defs\linq.d.ts" />
+    <Content Include="defs\mousetrap.d.ts" />
+    <Content Include="defs\qunit.d.ts" />
+    <Content Include="defs\state-machine.d.ts" />
+    <Content Include="defs\sugar.d.ts" />
+    <Content Include="defs\toastr.d.ts" />
+    <Content Include="defs\tween.js.d.ts" />
+    <Content Include="defs\tweenjs.d.ts" />
+    <Content Include="defs\underscore-typed.d.ts" />
+    <Content Include="defs\underscore.d.ts" />
+    <Content Include="css\toastr.min.css" />
+    <Content Include="lib\jquery-1.9.0.js" />
+    <Content Include="lib\toastr.min.js" />
     <Content Include="web.config" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
@@ -39,6 +58,7 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

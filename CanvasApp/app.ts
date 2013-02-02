@@ -1,3 +1,4 @@
+/// <reference path="defs/toastr.d.ts" />
 class Greeter {
     element: HTMLElement;
     span: HTMLElement;
@@ -11,8 +12,12 @@ class Greeter {
         this.span.innerText = new Date().toUTCString();
     }
 
+    update() : void {
+    	this.span.innerText = new Date().toUTCString();
+    }
+
     start() {
-        this.timerToken = setInterval(() => this.span.innerText = new Date().toUTCString(), 500);
+        this.timerToken = setInterval(() => this.update(), 500);
     }
 
     stop() {
@@ -25,4 +30,6 @@ window.onload = () => {
     var el = document.getElementById('content');
     var greeter = new Greeter(el);
     greeter.start();
+
+    toastr.success("Hello!");
 };
