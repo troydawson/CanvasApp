@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CanvasApp", "CanvasApp\CanvasApp.csproj", "{FA761B5D-F342-4941-9E03-5045693A4DEE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA761B5D-F342-4941-9E03-5045693A4DEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA761B5D-F342-4941-9E03-5045693A4DEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA761B5D-F342-4941-9E03-5045693A4DEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA761B5D-F342-4941-9E03-5045693A4DEE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
