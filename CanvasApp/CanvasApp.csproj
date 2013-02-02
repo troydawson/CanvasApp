@@ -48,11 +48,17 @@
     <Content Include="defs\underscore-typed.d.ts" />
     <Content Include="defs\underscore.d.ts" />
     <Content Include="css\toastr.min.css" />
+    <Content Include="lib\Box2dWeb-2.1.a.3.min.js" />
     <Content Include="lib\easeljs-0.5.0.min.js" />
     <Content Include="lib\jquery-1.9.0.js" />
     <Content Include="lib\toastr.min.js" />
+    <Content Include="lib\underscore.js" />
+    <Content Include="resources\ball.png" />
     <Content Include="resources\board_data.txt" />
     <Content Include="web.config" />
+    <Content Include="app.js.map">
+      <DependentUpon>app.ts</DependentUpon>
+    </Content>
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
