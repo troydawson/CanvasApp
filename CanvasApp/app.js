@@ -29,6 +29,11 @@ var MyBitmap = (function (_super) {
     }
     MyBitmap.prototype.setPos = function (o) {
         this.x = o.x , this.y = o.y;
+        return this;
+    };
+    MyBitmap.prototype.scale = function (scale) {
+        this.x *= scale , this.y *= scale;
+        return this;
     };
     return MyBitmap;
 })(createjs.Bitmap);
@@ -40,6 +45,11 @@ var MyShape = (function (_super) {
     }
     MyShape.prototype.setPos = function (o) {
         this.x = o.x , this.y = o.y;
+        return this;
+    };
+    MyShape.prototype.scale = function (scale) {
+        this.x *= scale , this.y *= scale;
+        return this;
     };
     return MyShape;
 })(createjs.Shape);
@@ -88,10 +98,7 @@ var App = (function () {
                 return;
             }
             var position = body.GetPosition();
-            obj.setPos(position);
-            obj.x *= SCALE , obj.y *= SCALE;
-            //	 		obj.x = position.x * SCALE;
-            //	 		obj.y = position.y * SCALE;
+            obj.setPos(position).scale(SCALE);
             obj.rotation = body.GetAngle() * 180 / Math.PI;
         });
         stage.update();

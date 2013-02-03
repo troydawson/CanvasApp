@@ -20,19 +20,23 @@ var box2d = {
 interface Point { x: number; y: number; };
 
 interface MyInterface {
-	setPos(o: Point): void;
+	setPos(o: Point): MyInterface;
+	scale(scale: number): MyInterface;
 }
 
 class MyBitmap extends createjs.Bitmap implements MyInterface {
 
-	setPos(o: Point): void { this.x = o.x, this.y = o.y }
+	setPos(o: Point) { this.x = o.x, this.y = o.y; return this; }
+
+	scale(scale: number) { this.x *= scale, this.y *= scale; return this;  }
 }
 
 class MyShape extends createjs.Shape implements MyInterface {
 
-	setPos(o: Point): void { this.x = o.x, this.y = o.y }
-}
+	setPos(o: Point) { this.x = o.x, this.y = o.y; return this; }
 
+	scale(scale: number) { this.x *= scale, this.y *= scale; return this; }
+}
 
 
 var SCALE = 30;
@@ -88,11 +92,7 @@ class App {
 
 	 		var position = body.GetPosition();
 
-	 		obj.setPos(position);
-	 		obj.x *= SCALE, obj.y *= SCALE;
-
-	 		//	 		obj.x = position.x * SCALE;
-//	 		obj.y = position.y * SCALE;
+	 		obj.setPos(position).scale(SCALE);
 	 		obj.rotation = body.GetAngle() * 180 / Math.PI;
 	 	});
 
