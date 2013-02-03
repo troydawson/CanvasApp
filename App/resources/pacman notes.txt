@@ -1,0 +1,23 @@
+sprite frame is 19 x 19, 1px between col and 2px between rows
+RRRRPPPP
+RRRRPPPP
+OOOOCCCC
+OOOOCCCC
+
+background is 320x460
+maze is 308 x 341, tiles are 11x11 offset from bg origin is 6,73
+
+tools > options Web Essentials > Compiler Flags > Generate Source Map  true, compile ts on build false
+
+tools > options > TypeScropt > Use the AMD true
+
+Project File csproj <Exec command ="tsc$ --module AMD @
+
+debugger command window ? window
+
+F12 Chrome debugging tools
+
+NuGet: 
+Install-Package toastr in Package Manager Console
+Install-Package RequireJS
+

@@ -1,4 +1,4 @@
-﻿var __extends = this.__extends || function (d, b) {
+var __extends = this.__extends || function (d, b) {
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
     d.prototype = new __();
@@ -8,127 +8,92 @@
 /// <reference path="defs/box2dweb.d.ts" />
 /// <reference path="defs/easeljs.d.ts" />
 /// <reference path="defs/toastr.d.ts" />
-var box2d = {
-    b2Vec2: Box2D.Common.Math.b2Vec2,
-    b2BodyDef: Box2D.Dynamics.b2BodyDef,
-    b2Body: Box2D.Dynamics.b2Body,
-    b2FixtureDef: Box2D.Dynamics.b2FixtureDef,
-    b2Fixture: Box2D.Dynamics.b2Fixture,
-    b2World: Box2D.Dynamics.b2World,
-    b2MassData: Box2D.Collision.Shapes.b2MassData,
-    b2PolygonShape: Box2D.Collision.Shapes.b2PolygonShape,
-    b2CircleShape: Box2D.Collision.Shapes.b2CircleShape,
-    b2DebugDraw: Box2D.Dynamics.b2DebugDraw
-};
-;
-var MyBitmap = (function (_super) {
-    __extends(MyBitmap, _super);
-    function MyBitmap() {
+
+var Vec = (function () {
+    function Vec(x, y, z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+    return Vec;
+})();
+var Bitmap = (function (_super) {
+    __extends(Bitmap, _super);
+    function Bitmap() {
         _super.apply(this, arguments);
 
     }
-    MyBitmap.prototype.setPos = function (o) {
+    Bitmap.prototype.setPos = function (o) {
         this.x = o.x , this.y = o.y;
         return this;
     };
-    MyBitmap.prototype.scale = function (scale) {
+    Bitmap.prototype.scale = function (scale) {
         this.x *= scale , this.y *= scale;
         return this;
     };
-    return MyBitmap;
+    return Bitmap;
 })(createjs.Bitmap);
-var MyShape = (function (_super) {
-    __extends(MyShape, _super);
-    function MyShape() {
+var Shape = (function (_super) {
+    __extends(Shape, _super);
+    function Shape() {
         _super.apply(this, arguments);
 
     }
-    MyShape.prototype.setPos = function (o) {
+    Shape.prototype.setPos = function (o) {
         this.x = o.x , this.y = o.y;
         return this;
     };
-    MyShape.prototype.scale = function (scale) {
+    Shape.prototype.scale = function (scale) {
         this.x *= scale , this.y *= scale;
         return this;
     };
-    return MyShape;
+    return Shape;
 })(createjs.Shape);
-var SCALE = 30;
-var stage, world;
-var GROUND_W = 800;
-var GROUND_H = 20;
-var CIRCLE_RADIUS = 32;
-function setupPhysics() {
-    world = new box2d.b2World(new box2d.b2Vec2(0, 100), true);
-    // create ground shape
-    var shape = new MyShape();
-    shape.graphics.beginFill("#F00").drawRect(0, 0, GROUND_W, GROUND_H);
-    shape.regX = GROUND_W / 2;
-    shape.regY = GROUND_H / 2;
-    stage.addChild(shape);
-    // create ground
-    var fixDef = new box2d.b2FixtureDef();
-    fixDef.density = 1;
-    fixDef.friction = 0.5;
-    var bodyDef = new box2d.b2BodyDef();
-    bodyDef.type = box2d.b2Body.b2_staticBody;
-    bodyDef.position.x = GROUND_W / 2 / SCALE;
-    bodyDef.position.y = (stage.canvas.height - GROUND_H) / SCALE;
-    bodyDef.userData = shape;
-    fixDef.shape = new box2d.b2PolygonShape();
-    (fixDef.shape).SetAsBox(GROUND_W / 2 / SCALE, GROUND_H / 2 / SCALE);
-    world.CreateBody(bodyDef).CreateFixture(fixDef);
-}
+/*
+// create ground shape
+var shape = new MyShape();
+shape.graphics.beginFill("#F00").drawRect(0, 0, GROUND_W, GROUND_H);
+shape.regX = GROUND_W / 2;
+shape.regY = GROUND_H / 2;
+stage.addChild(shape);
+
+createShape() {
+// create shape
+var shape = new MyBitmap("resources/ball.png");  //?createjs.Bitmap("resources/ball.png");
+shape.regX = CIRCLE_RADIUS / 2;
+shape.regY = CIRCLE_RADIUS / 2;
+stage.addChild(shape);
+*/
 var App = (function () {
     function App() {
+	   this.stage = new createjs.Stage(window.canvas);
+	   createjs.Touch.enable(this.stage);
     }
-    App.prototype.tick = function () {
-        world.Step(1 / 60, 10, 10);
-        // Box2Dの計算結果を描画に反映
-        var bodies = [
-            world.GetBodyList()
+    App.prototype.loadBoard = function () {
+        this.stage.addChild(new Bitmap("resources/background.png"));
+        this.maze = new Bitmap("resources/maze_a8.png");
+        this.maze.setPos(new Vec(6, 73));
+        this.stage.addChild(this.maze);
+        this.maze.filters = [
+		new createjs.ColorFilter(0, 0, 1, 1)
         ];
-        var next;
-        while(next = _.last(bodies).GetNext()) {
-            bodies.push(next);
-        }
-        _.each(bodies, function (body) {
-            var obj = body.GetUserData();
-            if(!obj) {
-                return;
-            }
-            var position = body.GetPosition();
-            obj.setPos(position).scale(SCALE);
-            obj.rotation = body.GetAngle() * 180 / Math.PI;
-        });
-        stage.update();
+//		this.maze.cache(0, 0, this.maze.image.width, this.maze.image.height);
+        this.stage.addChild(this.maze);
     };
-    App.prototype.createShape = function () {
-        // create shape
-        var shape = new MyBitmap("resources/ball.png");//?createjs.Bitmap("resources/ball.png");
-        
-        shape.regX = CIRCLE_RADIUS / 2;
-        shape.regY = CIRCLE_RADIUS / 2;
-        stage.addChild(shape);
-        // create ground
-        var fixDef = new box2d.b2FixtureDef();
-        fixDef.density = 1;
-        fixDef.friction = 0.5;
-        fixDef.restitution = 0.5;
-        var bodyDef = new box2d.b2BodyDef();
-        bodyDef.type = box2d.b2Body.b2_dynamicBody;
-        bodyDef.position.x = Math.random() * GROUND_W / SCALE;
-        bodyDef.position.y = 0 / SCALE;
-        bodyDef.userData = shape;
-        fixDef.shape = new box2d.b2CircleShape(CIRCLE_RADIUS / 2 / SCALE);
-        world.CreateBody(bodyDef).CreateFixture(fixDef);
+    App.prototype.tick = function () {
+        this.time += 0.0166666666666;
+        if(this.time > 1.0) {
+            this.time = 1.0;
+        }
+        this.stage.update();
     };
     App.prototype.init = function () {
-        stage = new createjs.Stage(document.getElementById("canvas"));
-        createjs.Touch.enable(stage);
-        GROUND_W = stage.canvas.width;
-        setupPhysics();
-        stage.onMouseDown = this.createShape;
+        this.loadBoard();
+        this.stage.onMouseDown = function () {
+            dbg.info("Mouse down!");
+        }// = this.createShape;
+        ;
+        dbg.info("ready to run!");
         createjs.Ticker.addListener(this);
         createjs.Ticker.setFPS(60);
         createjs.Ticker.useRAF = true;
