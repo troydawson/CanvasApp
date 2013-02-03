@@ -6,6 +6,8 @@
 
 var dbg = toastr;
 
+console.log("app loading");
+
 interface Point { x: number; y: number; };
 
 class Vec implements Point {
@@ -50,9 +52,11 @@ class Shape extends createjs.Shape implements Geometry {
 class App {
 
 	maze: Bitmap;
+	stage: createjs.Stage;
 
-	constructor(public stage: createjs.Stage) {
-		createjs.Touch.enable(stage);
+	constructor(canvas: HTMLCanvasElement) {
+		this.stage = new createjs.Stage(canvas);
+		createjs.Touch.enable(this.stage);
 	}
 
 	loadBoard(): void {
@@ -62,19 +66,20 @@ class App {
 		this.maze = new Bitmap("resources/maze_a8.png");
 		this.maze.setPos(new Vec(6, 73));
 		this.stage.addChild(this.maze);
-		this.maze.filters = [new createjs.ColorFilter(0, 0, 1, 1)];
+//		this.maze.filters = [new createjs.ColorFilter(0, 0, 1, 1)];
 //		this.maze.updateCache(0, 0, this.maze.image.width, this.maze.image.height);
-
-		this.stage.addChild(this.maze);
 	}
 
-	time: number;
+	time: number = 0.0;
 
 	tick(): void {
 
 		this.time += 0.0166666666666;
 
-		if (this.time > 1.0) this.time = 1.0;
+		if (this.time > 1.0) {
+			this.time = 1.0;
+			dbg.info("time out!");
+		}
 
 		this.stage.update();
 	}

@@ -9,6 +9,7 @@ var __extends = this.__extends || function (d, b) {
 /// <reference path="defs/easeljs.d.ts" />
 /// <reference path="defs/toastr.d.ts" />
 var dbg = toastr;
+console.log("app loading");
 ;
 var Vec = (function () {
     function Vec(x, y, z) {
@@ -66,25 +67,24 @@ shape.regY = CIRCLE_RADIUS / 2;
 stage.addChild(shape);
 */
 var App = (function () {
-    function App(stage) {
-        this.stage = stage;
-        createjs.Touch.enable(stage);
+    function App(canvas) {
+        this.time = 0.0;
+        this.stage = new createjs.Stage(canvas);
+        createjs.Touch.enable(this.stage);
     }
     App.prototype.loadBoard = function () {
         this.stage.addChild(new Bitmap("resources/background.png"));
         this.maze = new Bitmap("resources/maze_a8.png");
         this.maze.setPos(new Vec(6, 73));
         this.stage.addChild(this.maze);
-        this.maze.filters = [
-            new createjs.ColorFilter(0, 0, 1, 1)
-        ];
+        //		this.maze.filters = [new createjs.ColorFilter(0, 0, 1, 1)];
         //		this.maze.updateCache(0, 0, this.maze.image.width, this.maze.image.height);
-        this.stage.addChild(this.maze);
-    };
+            };
     App.prototype.tick = function () {
         this.time += 0.0166666666666;
         if(this.time > 1.0) {
             this.time = 1.0;
+            dbg.info("time out!");
         }
         this.stage.update();
     };
