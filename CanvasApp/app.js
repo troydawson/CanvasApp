@@ -125,7 +125,7 @@ var App = (function () {
     };
     App.prototype.init = function () {
         stage = new createjs.Stage(document.getElementById("canvas"));
-        //	createjs.Touch.enable(stage);
+        createjs.Touch.enable(stage);
         GROUND_W = stage.canvas.width;
         setupPhysics();
         stage.onMouseDown = this.createShape;
