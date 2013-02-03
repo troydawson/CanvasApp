@@ -31,7 +31,9 @@
 			ctx.fillStyle = '#505050';
 			ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-			new App().start();
+			var stage = new createjs.Stage(document.getElementById("canvas"));
+
+			new App(stage).start();
 		}
 	</script>
 </body>
