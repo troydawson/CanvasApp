@@ -21,11 +21,11 @@
     <UpgradeBackupLocation />
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="css\app.css" />
-    <Content Include="default.htm" />
     <Content Include="app.js">
       <DependentUpon>app.ts</DependentUpon>
     </Content>
+    <Content Include="css\app.css" />
+    <Content Include="default.htm" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
@@ -51,10 +51,15 @@
     <Content Include="lib\Box2dWeb-2.1.a.3.min.js" />
     <Content Include="lib\easeljs-0.5.0.min.js" />
     <Content Include="lib\jquery-1.9.0.js" />
+    <Content Include="lib\mousetrap.min.js" />
     <Content Include="lib\toastr.min.js" />
     <Content Include="lib\underscore.js" />
+    <Content Include="resources\background.png" />
     <Content Include="resources\ball.png" />
     <Content Include="resources\board_data.txt" />
+    <Content Include="resources\Default-Portrait.png" />
+    <Content Include="resources\maze_a8.png" />
+    <Content Include="resources\spritepage_00.png" />
     <Content Include="web.config" />
     <Content Include="app.js.map">
       <DependentUpon>app.ts</DependentUpon>

@@ -1,4 +1,5 @@
-﻿/// <reference path="defs/underscore-typed.d.ts" />
+﻿/// <reference path="defs/mousetrap.d.ts" />
+/// <reference path="defs/underscore-typed.d.ts" />
 /// <reference path="defs/box2dweb.d.ts" />
 /// <reference path="defs/easeljs.d.ts" />
 /// <reference path="defs/toastr.d.ts" />
@@ -16,6 +17,24 @@ var box2d = {
 	b2DebugDraw: Box2D.Dynamics.b2DebugDraw
 };
 
+interface Point { x: number; y: number; };
+
+interface MyInterface {
+	setPos(o: Point): void;
+}
+
+class MyBitmap extends createjs.Bitmap implements MyInterface {
+
+	setPos(o: Point): void { this.x = o.x, this.y = o.y }
+}
+
+class MyShape extends createjs.Shape implements MyInterface {
+
+	setPos(o: Point): void { this.x = o.x, this.y = o.y }
+}
+
+
+
 var SCALE = 30;
 var stage, world;
 var GROUND_W = 800;
@@ -26,7 +45,7 @@ function setupPhysics() {
 	world = new box2d.b2World(new box2d.b2Vec2(0, 100), true);
 
 	// create ground shape
-	var shape = new createjs.Shape();
+	var shape = new MyShape();
 	shape.graphics.beginFill("#F00").drawRect(0, 0, GROUND_W, GROUND_H);
 	shape.regX = GROUND_W / 2;
 	shape.regY = GROUND_H / 2;
@@ -46,6 +65,7 @@ function setupPhysics() {
 	world.CreateBody(bodyDef).CreateFixture(fixDef);
 }
 
+
 class App {
 
 	constructor() { }
@@ -55,24 +75,33 @@ class App {
 	 	world.Step(1 / 60, 10, 10);
 
 		// Box2Dの計算結果を描画に反映
-		var body = world.GetBodyList();
-		while (body) {
-			var obj = body.GetUserData();
-			if (obj) {
-				var position = body.GetPosition();
-				obj.x = position.x * SCALE;
-				obj.y = position.y * SCALE;
-				obj.rotation = body.GetAngle() * 180 / Math.PI;
-			}
-			body = body.GetNext();
-		}
+	 	var bodies: Box2D.Dynamics.b2Body[]  = [world.GetBodyList()];
+
+	 	var next: Box2D.Dynamics.b2Body;
+
+	 	while (next = _.last(bodies).GetNext())
+			bodies.push(next);
+
+	 	_.each(bodies, (body) => {
+	 		var obj: MyBitmap = body.GetUserData();
+	 		if (!obj) return;
+
+	 		var position = body.GetPosition();
+
+	 		obj.setPos(position);
+	 		obj.x *= SCALE, obj.y *= SCALE;
+
+	 		//	 		obj.x = position.x * SCALE;
+//	 		obj.y = position.y * SCALE;
+	 		obj.rotation = body.GetAngle() * 180 / Math.PI;
+	 	});
 
 		stage.update();
 	 }
 
 	createShape() {
 		// create shape
-		var shape = new createjs.Bitmap("resources/ball.png");
+		var shape = new MyBitmap("resources/ball.png");  //?createjs.Bitmap("resources/ball.png");
 		shape.regX = CIRCLE_RADIUS / 2;
 		shape.regY = CIRCLE_RADIUS / 2;
 		stage.addChild(shape);
@@ -92,6 +121,7 @@ class App {
 	}
 
 	init(): void {
+
 		stage = new createjs.Stage(<HTMLCanvasElement> document.getElementById("canvas"));
 		//	createjs.Touch.enable(stage);
 
