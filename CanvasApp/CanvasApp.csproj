@@ -48,6 +48,7 @@
     <Content Include="defs\underscore-typed.d.ts" />
     <Content Include="defs\underscore.d.ts" />
     <Content Include="css\toastr.min.css" />
+    <Content Include="lib\easeljs-NEXT.min.js" />
     <Content Include="loader.js" />
     <Content Include="lib\Box2dWeb-2.1.a.3.min.js" />
     <Content Include="lib\easeljs-0.5.0.min.js" />

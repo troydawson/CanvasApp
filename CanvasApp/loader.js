@@ -2,7 +2,7 @@
 [
 	"lib/underscore.js",
 	"lib/Box2dWeb-2.1.a.3.min.js",
-	"lib/easeljs-0.5.0.min.js",
+	"lib/easeljs-NEXT.min.js",
 	"lib/filters/BoxBlurFilter.js",
 	"lib/filters/ColorMatrixFilter.js",
 	"lib/filters/ColorMatrix.js",

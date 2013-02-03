@@ -6,8 +6,6 @@
 
 var dbg = toastr;
 
-console.log("app loading");
-
 interface Point { x: number; y: number; };
 
 class Vec implements Point {
@@ -53,6 +51,7 @@ class App {
 
 	maze: Bitmap;
 	stage: createjs.Stage;
+	box: createjs.Shape;
 
 	constructor(canvas: HTMLCanvasElement) {
 		this.stage = new createjs.Stage(canvas);
@@ -64,10 +63,10 @@ class App {
 		this.stage.addChild(new Bitmap("resources/background.png"));
 
 		this.maze = new Bitmap("resources/maze_a8.png");
+	
 		this.maze.setPos(new Vec(6, 73));
+
 		this.stage.addChild(this.maze);
-//		this.maze.filters = [new createjs.ColorFilter(0, 0, 1, 1)];
-//		this.maze.updateCache(0, 0, this.maze.image.width, this.maze.image.height);
 	}
 
 	time: number = 0.0;
@@ -77,8 +76,7 @@ class App {
 		this.time += 0.0166666666666;
 
 		if (this.time > 1.0) {
-			this.time = 1.0;
-			dbg.info("time out!");
+			this.time = 0.0;
 		}
 
 		this.stage.update();
@@ -88,7 +86,7 @@ class App {
 
 		this.loadBoard();
 
-		this.stage.onMouseDown = () => { dbg.info("Mouse down!"); }; // = this.createShape;
+		this.stage.onMouseDown = () => { dbg.info("Mouse down!"); };
 
 		dbg.info("ready to run!");
 

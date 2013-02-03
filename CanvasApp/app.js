@@ -9,7 +9,6 @@ var __extends = this.__extends || function (d, b) {
 /// <reference path="defs/easeljs.d.ts" />
 /// <reference path="defs/toastr.d.ts" />
 var dbg = toastr;
-console.log("app loading");
 ;
 var Vec = (function () {
     function Vec(x, y, z) {
@@ -77,14 +76,11 @@ var App = (function () {
         this.maze = new Bitmap("resources/maze_a8.png");
         this.maze.setPos(new Vec(6, 73));
         this.stage.addChild(this.maze);
-        //		this.maze.filters = [new createjs.ColorFilter(0, 0, 1, 1)];
-        //		this.maze.updateCache(0, 0, this.maze.image.width, this.maze.image.height);
-            };
+    };
     App.prototype.tick = function () {
         this.time += 0.0166666666666;
         if(this.time > 1.0) {
-            this.time = 1.0;
-            dbg.info("time out!");
+            this.time = 0.0;
         }
         this.stage.update();
     };
@@ -92,8 +88,7 @@ var App = (function () {
         this.loadBoard();
         this.stage.onMouseDown = function () {
             dbg.info("Mouse down!");
-        }// = this.createShape;
-        ;
+        };
         dbg.info("ready to run!");
         createjs.Ticker.addListener(this);
         createjs.Ticker.setFPS(60);
