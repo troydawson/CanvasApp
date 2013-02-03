@@ -48,8 +48,15 @@
     <Content Include="defs\underscore-typed.d.ts" />
     <Content Include="defs\underscore.d.ts" />
     <Content Include="css\toastr.min.css" />
+    <Content Include="lib\AlphaMapFilter.js" />
+    <Content Include="lib\AlphaMaskFilter.js" />
     <Content Include="lib\Box2dWeb-2.1.a.3.min.js" />
+    <Content Include="lib\BoxBlurFilter.js" />
+    <Content Include="lib\ColorFilter.js" />
+    <Content Include="lib\ColorMatrix.js" />
+    <Content Include="lib\ColorMatrixFilter.js" />
     <Content Include="lib\easeljs-0.5.0.min.js" />
+    <Content Include="lib\Filter.js" />
     <Content Include="lib\jquery-1.9.0.js" />
     <Content Include="lib\mousetrap.min.js" />
     <Content Include="lib\toastr.min.js" />

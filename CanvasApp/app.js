@@ -10,37 +10,45 @@ var __extends = this.__extends || function (d, b) {
 /// <reference path="defs/toastr.d.ts" />
 var dbg = toastr;
 ;
-var MyBitmap = (function (_super) {
-    __extends(MyBitmap, _super);
-    function MyBitmap() {
+var Vec = (function () {
+    function Vec(x, y, z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+    return Vec;
+})();
+var Bitmap = (function (_super) {
+    __extends(Bitmap, _super);
+    function Bitmap() {
         _super.apply(this, arguments);
 
     }
-    MyBitmap.prototype.setPos = function (o) {
+    Bitmap.prototype.setPos = function (o) {
         this.x = o.x , this.y = o.y;
         return this;
     };
-    MyBitmap.prototype.scale = function (scale) {
+    Bitmap.prototype.scale = function (scale) {
         this.x *= scale , this.y *= scale;
         return this;
     };
-    return MyBitmap;
+    return Bitmap;
 })(createjs.Bitmap);
-var MyShape = (function (_super) {
-    __extends(MyShape, _super);
-    function MyShape() {
+var Shape = (function (_super) {
+    __extends(Shape, _super);
+    function Shape() {
         _super.apply(this, arguments);
 
     }
-    MyShape.prototype.setPos = function (o) {
+    Shape.prototype.setPos = function (o) {
         this.x = o.x , this.y = o.y;
         return this;
     };
-    MyShape.prototype.scale = function (scale) {
+    Shape.prototype.scale = function (scale) {
         this.x *= scale , this.y *= scale;
         return this;
     };
-    return MyShape;
+    return Shape;
 })(createjs.Shape);
 /*
 // create ground shape
@@ -60,15 +68,33 @@ stage.addChild(shape);
 var App = (function () {
     function App(stage) {
         this.stage = stage;
-        //		createjs.Touch.enable(stage);
-            }
+        createjs.Touch.enable(stage);
+    }
+    App.prototype.loadBoard = function () {
+        this.stage.addChild(new Bitmap("resources/background.png"));
+        this.maze = new Bitmap("resources/maze_a8.png");
+        this.maze.setPos(new Vec(6, 73));
+        this.stage.addChild(this.maze);
+        this.maze.filters = [
+            new createjs.ColorFilter(0, 0, 1, 1)
+        ];
+        //		this.maze.updateCache(0, 0, this.maze.image.width, this.maze.image.height);
+        this.stage.addChild(this.maze);
+    };
     App.prototype.tick = function () {
+        this.time += 0.0166666666666;
+        if(this.time > 1.0) {
+            this.time = 1.0;
+        }
+        this.stage.update();
     };
     App.prototype.init = function () {
+        this.loadBoard();
         this.stage.onMouseDown = function () {
             dbg.info("Mouse down!");
         }// = this.createShape;
         ;
+        dbg.info("ready to run!");
         createjs.Ticker.addListener(this);
         createjs.Ticker.setFPS(60);
         createjs.Ticker.useRAF = true;

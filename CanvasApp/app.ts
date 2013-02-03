@@ -8,19 +8,23 @@ var dbg = toastr;
 
 interface Point { x: number; y: number; };
 
-interface MyInterface {
-	setPos(o: Point): MyInterface;
-	scale(scale: number): MyInterface;
+class Vec implements Point {
+	constructor(public x: number, public y: number, public z?: number) { }
 }
 
-class MyBitmap extends createjs.Bitmap implements MyInterface {
+interface Geometry {
+	setPos(o: Point): Geometry;
+	scale(scale: number): Geometry;
+}
+
+class Bitmap extends createjs.Bitmap implements Geometry {
 
 	setPos(o: Point) { this.x = o.x, this.y = o.y; return this; }
 
 	scale(scale: number) { this.x *= scale, this.y *= scale; return this;  }
 }
 
-class MyShape extends createjs.Shape implements MyInterface {
+class Shape extends createjs.Shape implements Geometry {
 
 	setPos(o: Point) { this.x = o.x, this.y = o.y; return this; }
 
@@ -45,15 +49,43 @@ class MyShape extends createjs.Shape implements MyInterface {
 
 class App {
 
+	maze: Bitmap;
+
 	constructor(public stage: createjs.Stage) {
-//		createjs.Touch.enable(stage);
+		createjs.Touch.enable(stage);
 	}
 
-	tick(): void {}
+	loadBoard(): void {
+
+		this.stage.addChild(new Bitmap("resources/background.png"));
+
+		this.maze = new Bitmap("resources/maze_a8.png");
+		this.maze.setPos(new Vec(6, 73));
+		this.stage.addChild(this.maze);
+		this.maze.filters = [new createjs.ColorFilter(0, 0, 1, 1)];
+//		this.maze.updateCache(0, 0, this.maze.image.width, this.maze.image.height);
+
+		this.stage.addChild(this.maze);
+	}
+
+	time: number;
+
+	tick(): void {
+
+		this.time += 0.0166666666666;
+
+		if (this.time > 1.0) this.time = 1.0;
+
+		this.stage.update();
+	}
 
 	init(): void {
 
+		this.loadBoard();
+
 		this.stage.onMouseDown = () => { dbg.info("Mouse down!"); }; // = this.createShape;
+
+		dbg.info("ready to run!");
 
 		createjs.Ticker.addListener(this);
 		createjs.Ticker.setFPS(60);
